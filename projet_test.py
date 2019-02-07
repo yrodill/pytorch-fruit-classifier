@@ -18,8 +18,8 @@ def read_folder(path):
 		if name.find(' ') != -1:
 			os.rename(path+'/'+ name, path +'/'+name.replace(' ','_'))
 
-path_train = 'fruits-360/Training'
-path_test = 'fruits-360/Test'
+path_train = './Training'
+path_test = './Test'
 
 #Call the function to rename sub-folders
 read_folder(path_train)
@@ -81,7 +81,7 @@ print(net)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=0.001, momentum = 0.9)
 
-epochs=5
+epochs=2
 for epoch in range(epochs):
 	running_loss=0.0
 	for i, data in enumerate(train_loader,0):
@@ -116,7 +116,7 @@ imshow(torchvision.utils.make_grid(images))
 
 #find classes
 classes=()
-with open("/net/cremi/bbothorel/espaces/travail/Semestre_3/Fruit-Images-Dataset/src/image_classification/utils/labels",'r') as f:
+with open("/labels",'r') as f:
 	liste=f.readlines()
 	for name in liste:
 		word=name.split("\n")
