@@ -81,7 +81,7 @@ print(net)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=0.001, momentum = 0.9)
 
-epochs=2
+epochs=5
 for epoch in range(epochs):
 	running_loss=0.0
 	for i, data in enumerate(train_loader,0):
@@ -116,7 +116,7 @@ imshow(torchvision.utils.make_grid(images))
 
 #find classes
 classes=()
-with open("/labels",'r') as f:
+with open("./labels",'r') as f:
 	liste=f.readlines()
 	for name in liste:
 		word=name.split("\n")
@@ -141,23 +141,5 @@ with torch.no_grad():
 		correct += (predicted == labels).sum().item()
 
 print ('Accuracy of the network on the 12000 test images: %d %%' %(100* correct / total))
-
-class_correct = list(0. for i in range(len(classes)))
-class_total = list(0. for i in range(len(classes)))
-with torch.no_grad():
-    for data in test_loader:
-        images, labels = data
-        outputs = net(images)
-        _, predicted = torch.max(outputs, 1)
-        c = (predicted == labels).squeeze()
-        for i in range(4):
-            label = labels[i]
-            class_correct[label] += c[i].item()
-            class_total[label] += 1
-
-
-for i in range(10):
-    print('Accuracy of %5s : %2d %%' % (
-        classes[i], 100 * class_correct[i] / class_total[i]))
 
 plt.show()
